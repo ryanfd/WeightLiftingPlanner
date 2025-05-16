@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Search from './Components/Search/Search';
+import { Outlet } from 'react-router-dom';
 
 interface Forecast {
     date: string;
@@ -46,7 +47,7 @@ function App() {
         //    {contents}
         //</div>
         <>
-         <Search />
+         <Outlet />
         </>
     );
 
