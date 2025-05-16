@@ -1,11 +1,13 @@
 import { useState, type ChangeEvent, useEffect, type SyntheticEvent } from "react";
 import Search from "../../Components/Search/Search";
+import { searchExercisesByMuscleGroup } from "../../api";
+import type { ExerciseSearch } from "../../exercise";
 
 interface Props { }
 
 const SearchPage = (props: Props) => {
     const [search, setSearch] = useState<string>("");
-    const [searchResult, setSearchResult] = useState<CompanySearch[]>([]);
+    const [searchResult, setSearchResult] = useState<ExerciseSearch[]>([]);
     const [serverError, setServerError] = useState<string | null>(null);
 
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +25,7 @@ const SearchPage = (props: Props) => {
 
     const onSearchSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
-        //const result = await searchCompanies(search);
+        const result = await searchExercisesByMuscleGroup(search);
 
         if (typeof result === "string") {
             setServerError(result);
@@ -37,7 +39,7 @@ const SearchPage = (props: Props) => {
 
     return (
         <div className="App">
-            <Search onSearchSubmit={onSearchSubmit} search={search} handleSearchChange={handleSearchChange} />
+            <Search searchString={search} onSearchSubmit={onSearchSubmit} handleSearchChange={handleSearchChange} />
             {serverError && <div>Unable to connect to API</div>}
         </div>
     )
